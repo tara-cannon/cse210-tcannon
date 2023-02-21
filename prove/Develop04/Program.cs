@@ -39,7 +39,8 @@ class Program
 
                 //Reflecting Activity
                 case "2":
-
+                ReflectionActivity reflection = new ReflectionActivity();
+                reflection.DisplayReflectionActivity();
 
                 break;
 
