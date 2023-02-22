@@ -46,7 +46,8 @@ class Program
 
                 //Listing Activity
                 case "3":
-
+                ListingActivity listing = new ListingActivity();
+                listing.DisplayListingActivity();
 
                 break;
 
