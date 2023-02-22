@@ -2,7 +2,21 @@ using System;
 
 public class Activity
 {
+    public int _seconds = 30;
+    public string _secondsInputted = "";
+
+    private int _theseSeconds = 0;
     private int counter;
+
+    public void GetActivityDisplay(string _activityName, string _activityDescription)
+    {
+        GetStartingMessage(_activityName, _activityDescription);
+        Console.WriteLine("How long, in increments of 10 seconds, would you like for your session?");
+        _secondsInputted = Console.ReadLine();
+        _theseSeconds = int.Parse(_secondsInputted);
+        _seconds = GetSeconds(_theseSeconds);
+        GetReady(); 
+    }
 
     public void GetStartingMessage(string _activityName, string _activityDescription)
     {
@@ -17,10 +31,10 @@ public class Activity
     {
         Console.WriteLine("");
         Console.WriteLine($"Well done!!");
-        GetSpinner();
+        GetSpinner(12);
         Console.WriteLine("");
         Console.WriteLine($"You have completed another {_displaySeconds} seconds of the {_displayActivityName}.");
-        GetSpinner();
+        GetSpinner(12);
         Console.Clear();
     }
 
@@ -28,13 +42,13 @@ public class Activity
     {
         Console.Clear();
         Console.WriteLine($"Get ready...");
-        GetSpinner();
+        GetSpinner(12);
         Console.WriteLine("");
     }
 
-    public void GetSpinner()
+    public void GetSpinner(int howManyTimesAround)
     {
-        for ( int i = 0; i < 12; i++)
+        for ( int i = 0; i < howManyTimesAround; i++)
         {
             counter++;        
             switch (counter % 4)
@@ -64,7 +78,7 @@ public class Activity
         Console.Write(" \b");
     }
 
-    public int GetSeconds(int secondsInputted)
+    private int GetSeconds(int secondsInputted)
     {
         return (secondsInputted / 10);
     }

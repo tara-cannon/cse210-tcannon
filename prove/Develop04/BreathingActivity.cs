@@ -4,16 +4,10 @@ public class BreathingActivity : Activity
 {
     private string _activityDescription = "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.";
     private string _activityName = "Breathing Activity";
-    private int _seconds = 30;
 
     public void DisplayBreathingActivity()
     {
-        GetStartingMessage(_activityName, _activityDescription);
-        Console.WriteLine("How long, in increments of 10 seconds, would you like for your session?");
-        string _secondsInputted = Console.ReadLine();
-        int _theseSeconds = int.Parse(_secondsInputted);
-        _seconds = GetSeconds(_theseSeconds);
-        GetReady();        
+        GetActivityDisplay(_activityName, _activityDescription);       
         DisplayBreatheInAndOut(_seconds);
         GetEndingMessage(_secondsInputted, _activityName);
     }

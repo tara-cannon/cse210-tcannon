@@ -4,8 +4,8 @@ public class ReflectionActivity : Activity
 {
     private string _activityDescription = "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.";
     private string _activityName = "Reflection Activity";
-    private int _seconds = 30;
     private string _prompt = "";
+    private string _question = "";
 
     List<string> promptList = new List<string>()
     {
@@ -30,13 +30,7 @@ public class ReflectionActivity : Activity
 
     public void DisplayReflectionActivity()
     {
-        GetStartingMessage(_activityName, _activityDescription);
-        Console.WriteLine("How long, in increments of 10 seconds, would you like for your session?");
-        string _secondsInputted = Console.ReadLine();
-        int _theseSeconds = int.Parse(_secondsInputted);
-        _seconds = GetSeconds(_theseSeconds);
-        GetReady();        
-        //specific inner workings of Reflection Activity go here
+        GetActivityDisplay(_activityName, _activityDescription);
         DisplayThinkDeeply();
         GetEndingMessage(_secondsInputted, _activityName);
     }
@@ -44,9 +38,27 @@ public class ReflectionActivity : Activity
     public void DisplayThinkDeeply()
     {
         Random random = new Random();
-        int num = random.Next(0,3);
-        //Prompt prompt = new Prompt();
-        _prompt = promptList[num];
-        Console.WriteLine(_prompt);
+        int promptNum = random.Next(0,3);
+        _prompt = promptList[promptNum];
+        Console.WriteLine("Consider the following prompt:");
+        Console.WriteLine("");
+        Console.WriteLine($"--- {_prompt} ---");
+        Console.WriteLine("");
+        Console.WriteLine("When you have something in mind, press enter to continue.");
+        string response = Console.ReadLine();
+        Console.WriteLine("Now ponder on each of the following questions as they related to this experience.");
+        Console.WriteLine("You may begin in:");
+        GetCountdown();
+        Console.Clear();
+
+        for (int i = 0; i < _seconds; i++)
+        {
+            int questionNum = random.Next(0,8);
+            _question = questionList[questionNum];
+
+            Console.WriteLine($"> {_question}");
+            GetSpinner(20);
+        }
+
     }
 }
