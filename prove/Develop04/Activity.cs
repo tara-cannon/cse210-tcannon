@@ -3,17 +3,18 @@ using System;
 public class Activity
 {
     public int _seconds = 30;
+    public int _secondsRemaining = 0;
     public string _secondsInputted = "";
 
-    private int _theseSeconds = 0;
+    public int _theseSeconds = 0;
     private int counter;
 
     public void GetActivityDisplay(string _activityName, string _activityDescription)
     {
         GetStartingMessage(_activityName, _activityDescription);
         Console.WriteLine("How long, in increments of 10 seconds, would you like for your session?");
-        _secondsInputted = Console.ReadLine();
-        _theseSeconds = int.Parse(_secondsInputted);
+        _secondsInputted = Console.ReadLine();        
+        _theseSeconds = int.Parse(_secondsInputted);        
         _seconds = GetSeconds(_theseSeconds);
         GetReady(); 
     }
@@ -66,10 +67,21 @@ public class Activity
 
     public void GetCountdown()
     {
-
-        for ( int i = 0; i < 5; i++)
+        int howManySeconds = 0;
+        if (_secondsRemaining > 5)
         {
-            counter = 5 - i;
+            _secondsRemaining -= 5;
+            howManySeconds = 5;
+        }
+        else
+        {
+            howManySeconds = _secondsRemaining;
+            _secondsRemaining = 0;
+        }
+
+        for ( int i = 0; i < howManySeconds; i++)
+        {
+            counter = howManySeconds - i;
             
             Console.Write(counter);
             Thread.Sleep(1000);

@@ -5,6 +5,7 @@ public class ListingActivity : Activity
     private string _activityDescription = "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.";
     private string _activityName = "Listing Activity";
     private string _prompt = "";
+    private int _numberOfResponses = 0;
 
     List<string> promptList = new List<string>()
     {
@@ -15,7 +16,7 @@ public class ListingActivity : Activity
         "Who are some of your personal heroes?"
     };
 
-    //private List<Response> _response = new List<Response>();
+    private List<string> _responseList = new List<string>();
 
     public void DisplayListingActivity()
     {
@@ -27,6 +28,38 @@ public class ListingActivity : Activity
     public void ListingGoodThings()
     {
         Console.WriteLine("List as namy responses you can to the following prompt:");
+        Random random = new Random();
+        int promptNum = random.Next(0,4);
+        _prompt = promptList[promptNum];
+        Console.WriteLine($"--- {_prompt} ---");
+        Console.WriteLine("You may begin in:");
+        _secondsRemaining = 3;
+        GetCountdown();
+
+        DateTime startTime = DateTime.Now;
+        DateTime futureTime = startTime.AddSeconds(_theseSeconds);  
+        DateTime currentTime = DateTime.Now;
+
+        do
+        {
+            string response = Console.ReadLine();
+            _responseList.Add(response);
+            currentTime = DateTime.Now;
+            
+        } while (currentTime < futureTime);
+
+
+
+
+        /*for (int i = 0; i < _seconds; i++)
+        {
+            string response = Console.ReadLine();
+            _responseList.Add(response);
+        }
+*/
+        _numberOfResponses = _responseList.Count;
+
+        Console.WriteLine($"You listed {_numberOfResponses} items!");
     }
 
 }
