@@ -21,10 +21,6 @@ public class BreathingActivity : Activity
         _secondsRemaining = 0;
         _secondsRemaining = futureTime.Second - currentTime.Second;
 
-        //if (currentTime < futureTime)
-       // {
-        //    Console.WriteLine("testing");
-        //}
         do 
         {
             Console.WriteLine("");
@@ -38,19 +34,5 @@ public class BreathingActivity : Activity
             GetCountdown();
             
         } while (_secondsRemaining > 0);
-
-
-
-
-
-
-        /*for ( int i = 0; i < _seconds; i++)     //Each loop is 10 seconds
-        {            
-            Console.WriteLine("");
-            Console.WriteLine("Breathe in...");
-            GetCountdown();
-            Console.WriteLine("Breathe out...");
-            GetCountdown();
-        }
-    */}
+    }
 }

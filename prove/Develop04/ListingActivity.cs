@@ -47,16 +47,7 @@ public class ListingActivity : Activity
             currentTime = DateTime.Now;
             
         } while (currentTime < futureTime);
-
-
-
-
-        /*for (int i = 0; i < _seconds; i++)
-        {
-            string response = Console.ReadLine();
-            _responseList.Add(response);
-        }
-*/
+        
         _numberOfResponses = _responseList.Count;
 
         Console.WriteLine($"You listed {_numberOfResponses} items!");

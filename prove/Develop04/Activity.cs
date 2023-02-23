@@ -12,7 +12,7 @@ public class Activity
     public void GetActivityDisplay(string _activityName, string _activityDescription)
     {
         GetStartingMessage(_activityName, _activityDescription);
-        Console.WriteLine("How long, in increments of 10 seconds, would you like for your session?");
+        Console.WriteLine("How long, in seconds, would you like for your session?");
         _secondsInputted = Console.ReadLine();        
         _theseSeconds = int.Parse(_secondsInputted);        
         _seconds = GetSeconds(_theseSeconds);
