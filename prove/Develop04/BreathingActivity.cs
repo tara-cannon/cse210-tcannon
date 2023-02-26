@@ -7,32 +7,23 @@ public class BreathingActivity : Activity
 
     public void DisplayBreathingActivity()
     {
-        GetActivityDisplay(_activityName, _activityDescription); 
-            
-        DisplayBreatheInAndOut(_seconds);
+        GetActivityDisplay(_activityName, _activityDescription);  
+        DisplayBreatheInAndOut();
         GetEndingMessage(_secondsInputted, _activityName);
     }
 
-    public void DisplayBreatheInAndOut(int _seconds)
+    public void DisplayBreatheInAndOut()
     {
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(_theseSeconds);  
-        DateTime currentTime = DateTime.Now;
-        _secondsRemaining = 0;
-        _secondsRemaining = futureTime.Second - currentTime.Second;
 
-        do 
+        while (DateTime.Now < futureTime)
         {
             Console.WriteLine("");
             Console.WriteLine("Breathe in...");
-            GetCountdown();
-            if (_secondsRemaining == 0)
-            {
-                break;
-            }
+            GetCountdown(5);
             Console.WriteLine("Breathe out...");
-            GetCountdown();
-            
-        } while (_secondsRemaining > 0);
+            GetCountdown(5);
+        }
     }
 }

@@ -33,21 +33,17 @@ public class ListingActivity : Activity
         _prompt = promptList[promptNum];
         Console.WriteLine($"--- {_prompt} ---");
         Console.WriteLine("You may begin in:");
-        _secondsRemaining = 3;
-        GetCountdown();
+        GetCountdown(3);
 
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(_theseSeconds);  
-        DateTime currentTime = DateTime.Now;
 
-        do
+        while (DateTime.Now < futureTime)
         {
             string response = Console.ReadLine();
             _responseList.Add(response);
-            currentTime = DateTime.Now;
-            
-        } while (currentTime < futureTime);
-        
+        }
+
         _numberOfResponses = _responseList.Count;
 
         Console.WriteLine($"You listed {_numberOfResponses} items!");

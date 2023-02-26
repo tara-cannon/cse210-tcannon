@@ -48,15 +48,14 @@ public class ReflectionActivity : Activity
         string response = Console.ReadLine();
         Console.WriteLine("Now ponder on each of the following questions as they related to this experience.");
         Console.WriteLine("You may begin in:");
-        GetCountdown();
+        GetCountdown(5);
         Console.Clear();
 
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(_theseSeconds);  
-        DateTime currentTime = DateTime.Now;
-        int remainingTime = _theseSeconds * 2;
+        int _remainingTime = _theseSeconds * 2;
 
-        do 
+        while (DateTime.Now < futureTime)
         {
             int questionNum = random.Next(0,8);
             _question = questionList[questionNum];
@@ -65,17 +64,15 @@ public class ReflectionActivity : Activity
 
             if (_theseSeconds * 2 > 20)
             {
-                remainingTime = 20;
+                _remainingTime = 20;
                 _theseSeconds -= 10;
             }
             else
             {
-                remainingTime = _theseSeconds * 2;
+                _remainingTime = _theseSeconds * 2;
             }
 
-            GetSpinner(remainingTime);
-            currentTime = DateTime.Now;
-            
-        } while (currentTime < futureTime);
+            GetSpinner(_remainingTime);
+        }
     }
 }

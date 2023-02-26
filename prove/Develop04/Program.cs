@@ -8,7 +8,6 @@ class Program
     {
         bool exitProgram = false;
 
-        //Menu options
         static string UserChoice()
         {
             Console.WriteLine("Menu Options:");
@@ -27,36 +26,31 @@ class Program
         {
             string choiceSelected = UserChoice();
 
-            //Take user option and execute
             switch(choiceSelected)
             {
-                //Breathing Activity
                 case "1":
                 BreathingActivity breathing = new BreathingActivity();
                 breathing.DisplayBreathingActivity();
 
                 break;
 
-                //Reflecting Activity
                 case "2":
                 ReflectionActivity reflection = new ReflectionActivity();
                 reflection.DisplayReflectionActivity();
 
                 break;
 
-                //Listing Activity
                 case "3":
                 ListingActivity listing = new ListingActivity();
                 listing.DisplayListingActivity();
 
                 break;
 
-                //Quit Program
                 case "4":
                     exitProgram = true;
                 break;
 
-                //Error handling
+                //Exceeding Requirements: Error handling
                 default:
                     Console.WriteLine("Please choose a valid option.");
                     break;
