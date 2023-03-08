@@ -2,12 +2,35 @@ using System;
 
 public class ChecklistGoals : Goals
 {
-    private string _pointsEntered;
-    private int _points;
+    //private string _pointsEntered;
+    private int _times;
+    private int _bonus;
 
-    public ChecklistGoals(string name, string description, int points) : base (name, description)
+    public ChecklistGoals(string name, string description, int points, int times, int bonus) : base (name, description)
     {
         _points = points;
+        _times = times;
+        _bonus = bonus;
+    }
+/*
+    public int GetTimes()
+    {
+        return _times;
+    }
+
+    public void SetTimes(int times)
+    {
+        _times = times;
+    }
+
+    public int GetBonus()
+    {
+        return _bonus;
+    }
+
+    public void SetBonus(int bonus)
+    {
+        _bonus = bonus;
     }
 
     public override string NameOfYourGoal()
@@ -22,12 +45,43 @@ public class ChecklistGoals : Goals
         return Console.ReadLine();
     }
 
-    public override int GetPoints()
+
+    public int GetTimes()
     {
-        Console.WriteLine("What is the amount of points associated with this goal?");
-        _pointsEntered = Console.ReadLine();
-        _points = int.Parse(_pointsEntered);
+        return _times;
+    }
+
+    public int GetBonus()
+    {
+        return _bonus;
+    }
+*/
+    public override int GetPointsAwarded()
+    {
+        //Console.WriteLine("What is the amount of points associated with this goal?");
+        //_pointsEntered = Console.ReadLine();
+        //_points = int.Parse(_pointsEntered);
         return _points;
+    }
+
+    public override string GetCompleted()
+    {
+        return "X";
+    }
+
+    public override string GetRecordEvent()
+    {
+        return "X";
+    }
+
+    public override int GetTimes()
+    {
+        return _times;
+    }
+
+    public override int GetBonus()
+    {
+        return _bonus;
     }
     
 }
