@@ -9,7 +9,6 @@ class Program
         List<Goals> goals = new List<Goals>();
 
         int totalPoints = 0;
-        //int totalChecklistTimes = 0;
 
         bool exitProgram = false;
         
@@ -323,7 +322,17 @@ class Program
                                 checklist.SetBonusPoints(int.Parse(importedList[3]));
                                 checklist.SetHowMany(int.Parse(importedList[4]));
                                 checklist.SetChecklistTimes(int.Parse(importedList[5]));
-                                checklist.SetComplete(" ");
+                                if (importedList[4] == importedList[5])
+                                {
+                                    checklist.SetCheckBonus(Convert.ToBoolean(true));
+                                    checklist.SetComplete("X");
+                                }
+                                else
+                                {
+                                    checklist.SetCheckBonus(Convert.ToBoolean(false));
+                                    checklist.SetComplete(" ");
+                                }
+                                
                                 goals.Add(checklist);                                
                             }
                             else
