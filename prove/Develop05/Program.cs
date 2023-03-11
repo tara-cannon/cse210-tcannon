@@ -9,7 +9,7 @@ class Program
         List<Goals> goals = new List<Goals>();
 
         int totalPoints = 0;
-        int totalChecklistTimes = 0;
+        //int totalChecklistTimes = 0;
 
         bool exitProgram = false;
         
@@ -48,19 +48,19 @@ class Program
             return goalChoice;
         }
 
-        static string GetName()
+        static string NameOfYourGoal()
         {
             Console.Write("What is the name of your goal? ");
             return Console.ReadLine();
         }
 
-        static string GetShortDescription()
+        static string ShortDescription()
         {
             Console.Write("What is a short description of it? ");
             return Console.ReadLine();
         }
 
-        static int GetPoints()
+        static int NumberOfPoints()
         {
             string _pointsEntered = "";
             int _points = 0;
@@ -71,7 +71,7 @@ class Program
             return _points;
         }
 
-        static int GetHowManyTimes()
+        static int HowManyTimes()
         {
             string _timesEntered = "";
             int _times = 0;
@@ -84,7 +84,7 @@ class Program
             return _times;
         }
 
-        static int GetBonusAmount()
+        static int BonusAmount()
         {
             string _bonusEntered = "";
             int _bonus = 0;
@@ -113,7 +113,7 @@ class Program
         {  
             int _counter = 0;
             int _pointsAccomplished = 0;
-            int _bonusPoints = 0;
+
             Console.Write("Which goal did you accomplish? ");
             
             string _numberEntered = Console.ReadLine();
@@ -125,30 +125,63 @@ class Program
                 if (_counter == _number)
                 {
                     _pointsAccomplished = g.GetPointsAwarded();
+
+                    if (g.ToString() == "SimpleGoals")
+                    {
+                        g.SetComplete("X");        
+                    }
+                    else if (g.ToString() == "ChecklistGoals")
+                    {
+                        g.SetChecklistTimes(1);
+                        
+                        if (g.GetChecklistTimes() == g.GetTimes())
+                        {
+                            g.SetComplete("X"); 
+                        }                                   
+                    }                    
                 }
             }
+
             return _pointsAccomplished;
         }
 
-        static int GoalAccomplishedHowManyTimes(List<Goals> list)
+        static void GoalAccomplishedHowManyTimes(List<Goals> list)
         {  
-            int _numberOfTimes = 0;
+            foreach (Goals g in list)
+            {                
+                if (g.ToString() == "SimpleGoals")
+                {
+                    g.SetComplete("X");        
+                }
+                else if (g.ToString() == "ChecklistGoals")
+                {
+                    g.SetChecklistTimes(1);
+                    
+                    if (g.GetChecklistTimes() == g.GetTimes())
+                    {
+                        g.SetComplete("X"); 
+                    }                                   
+                }                
+            }
+        }
+
+        static int GoalBonus(List<Goals> list)
+        {  
+            int _counter = 0;
+            int _bonusAccomplished = 0;
 
             foreach (Goals g in list)
             {                
-                if (g.ToString() == "ChecklistGoals")
+                _counter += 1;
+                if (g.GetChecklistTimes() == g.GetTimes() && g.ToString() == "ChecklistGoals" && g.GetCheckBonus() != true)
                 {
-                    _numberOfTimes = 1;                    
+                    _bonusAccomplished = g.GetBonus();
+                    g.SetCheckBonus(true);
                 }
-                
             }
-            return _numberOfTimes;
+            return _bonusAccomplished;
         }
 
-        //static string GetStringRepresentation()
-        //{
-            
-        //}
 
 #endregion
 
@@ -170,17 +203,32 @@ class Program
                     switch(goalSelected)
                     {
                         case "1":
-                            SimpleGoals simple = new SimpleGoals(GetName(), GetShortDescription(), GetPoints());                            
+                            SimpleGoals simple = new SimpleGoals();
+                            simple.SetName(NameOfYourGoal());
+                            simple.SetDescription(ShortDescription());
+                            simple.SetPoints(NumberOfPoints());
+                            simple.SetComplete(" ");
                             goals.Add(simple);
                         break;
 
                         case "2":
-                            EternalGoals eternal = new EternalGoals(GetName(), GetShortDescription(), GetPoints());
+                            EternalGoals eternal = new EternalGoals();
+                            eternal.SetName(NameOfYourGoal());
+                            eternal.SetDescription(ShortDescription());
+                            eternal.SetPoints(NumberOfPoints());
+                            eternal.SetComplete(" ");
                             goals.Add(eternal);
                         break;
 
                         case "3":
-                            ChecklistGoals checklist = new ChecklistGoals(GetName(), GetShortDescription(), GetPoints(), GetHowManyTimes(), GetBonusAmount());
+                            ChecklistGoals checklist = new ChecklistGoals();
+                            checklist.SetName(NameOfYourGoal());
+                            checklist.SetDescription(ShortDescription());
+                            checklist.SetPoints(NumberOfPoints());
+                            checklist.SetChecklistTimes(0);
+                            checklist.SetHowMany(HowManyTimes());
+                            checklist.SetBonusPoints(BonusAmount());
+                            checklist.SetComplete(" ");
                             goals.Add(checklist);
                         break;
                     }
@@ -190,80 +238,39 @@ class Program
                 //List Goals               
                 case "2":
                     int _counter = 0;
+
                     Console.WriteLine("The goals are:");
-                foreach (Goals g in goals)
-                {
-                    //string goalDescription = g.GetDescription();
-                    //string goalName = g.GetName();
-                    //int goalPoints = g.GetPoints();
-                    //int goalTimes = g.GetTimes();
-                    //int goalBonus = g.GetBonus();
-                    //need g.GetCompleted();
-                    string _goalCompleted = "";
-                    string _nameOfGoal = g.ToString();
-                    _counter += 1;
 
-                    if (_nameOfGoal == "SimpleGoals")
+                    foreach (Goals g in goals)
                     {
-                        _goalCompleted = "X";
-                    }
-                    else if (_nameOfGoal == "ChecklistGoals" && g.GetBonus() == totalChecklistTimes);
-                    {
-                        _goalCompleted = "X";
-                    }
-                    else
-                    {
-                        _goalCompleted = " ";
+                        string _nameOfGoal = g.ToString();
+                        _counter += 1;
+                        
+                        if (_nameOfGoal == "ChecklistGoals")
+                        {
+                            Console.Write($"{_counter}. [{g.GetComplete()}] {g.GetName()} ({g.GetDescription()})");
+                            Console.WriteLine($" -- Currently completed: {g.GetChecklistTimes()}/{g.GetTimes()}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{_counter}. [{g.GetComplete()}] {g.GetName()} ({g.GetDescription()})");
+                        }                        
                     }
 
-                    if (_nameOfGoal == "ChecklistGoals")
-                    {
-                        Console.WriteLine($"{_counter}. [{_goalCompleted}] {g.GetName()} ({g.GetDescription()}) -- Currently completed: {totalChecklistTimes}/{g.GetTimes()}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{_counter}. [{_goalCompleted}] {g.GetName()} ({g.GetDescription()})");
-                    }
-                    
-                }
                 break;
 
                 //Save Goals
                 case "3":
                     //Ask the user for a file name and write out all entries
-                    Console.Write("Save file as: ");
-                    string saveFileName = Console.ReadLine();
-
-                    using (StreamWriter outputFile = new StreamWriter(saveFileName))
-                    {
-                        foreach (Goals g in goals)
-                        {
-                            string goalDescription = g.GetDescription();
-                            string goalName = g.GetName();
-                            int goalPoints = 0; //need to remove when working
-                            //int goalPoints = g.GetPoints();
-                            //int goalPoints = g.GetPointsAwarded();
-                            //int goalTimes = g.GetTimes();
-                            //int goalBonus = g.GetBonus();
-                            //string saveGoals = GetStringRepresentation();
-                            outputFile.WriteLine(g + ":" + goalName + "," + goalDescription + "," + goalPoints);
-                        }
-                    }
+                    
 
                     break;
 
                 //Load Goals
                 case "4":
                     //Ask the user for the file to load
-                    Console.Write("What is the file name? ");
-                    string loadFileName = Console.ReadLine();
-                    string[] lines = System.IO.File.ReadAllLines(loadFileName);
-
-                    foreach (string line in lines)
-                    {
-                        Console.WriteLine(line);
-                    }
-
+                    
+                    
                     break;
 
                 //Record Event
@@ -271,15 +278,17 @@ class Program
                     DisplayGoals(goals);
                     int _accomplished = GoalAccomplished(goals);
                     totalPoints += _accomplished;
-                    int _isChecklist = GoalAccomplishedHowManyTimes(goals);
-                    totalChecklistTimes += _isChecklist;
+                    int _accomplishedBonus = GoalBonus(goals);
+                    Console.WriteLine($"Congratulations! You have earned {_accomplished + _accomplishedBonus} points!");
+                    totalPoints += _accomplishedBonus;
+                    Console.WriteLine($"You now have {totalPoints} points.");
                     break;
+
                 //Quit Program
                 case "6":
                     exitProgram = true;
                 break;
 
-                //(Above and beyond element) Error handling
                 default:
                     Console.WriteLine("Please choose a valid option.");
                     break;
