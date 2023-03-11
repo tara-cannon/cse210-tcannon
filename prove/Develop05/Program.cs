@@ -145,7 +145,7 @@ class Program
             return _pointsAccomplished;
         }
 
-        static void GoalAccomplishedHowManyTimes(List<Goals> list)
+        /*static void GoalAccomplishedHowManyTimes(List<Goals> list)
         {  
             foreach (Goals g in list)
             {                
@@ -164,7 +164,7 @@ class Program
                 }                
             }
         }
-
+*/
         static int GoalBonus(List<Goals> list)
         {  
             int _counter = 0;
@@ -181,7 +181,21 @@ class Program
             }
             return _bonusAccomplished;
         }
-
+        static string GetStringRepresentation(Goals goals)
+        {
+            if (goals.ToString() == "SimpleGoals")
+            {
+                return ($"{goals}:{goals.GetName()},{goals.GetDescription()},{goals.GetPointsAwarded()},{goals.GetComplete()}");
+            }
+            else if (goals.ToString() == "EternalGoals")
+            {
+                return ($"{goals}:{goals.GetName()},{goals.GetDescription()},{goals.GetPointsAwarded()}");
+            }
+            else
+            {
+                return ($"{goals}:{goals.GetName()},{goals.GetDescription()},{goals.GetPointsAwarded()},{goals.GetBonus()},{goals.GetTimes()},{goals.GetChecklistTimes()}");
+            }
+        }
 
 #endregion
 
@@ -262,7 +276,18 @@ class Program
                 //Save Goals
                 case "3":
                     //Ask the user for a file name and write out all entries
-                    
+                    Console.Write("Save file as: ");
+                    string saveFileName = Console.ReadLine();
+
+                    using (StreamWriter outputFile = new StreamWriter(saveFileName))
+                    {
+                        outputFile.WriteLine(totalPoints);
+                        foreach (Goals g in goals)
+                        {
+                            string saveGoals = GetStringRepresentation(g);
+                            outputFile.WriteLine(saveGoals);
+                        }
+                    }
 
                     break;
 
