@@ -145,26 +145,6 @@ class Program
             return _pointsAccomplished;
         }
 
-        /*static void GoalAccomplishedHowManyTimes(List<Goals> list)
-        {  
-            foreach (Goals g in list)
-            {                
-                if (g.ToString() == "SimpleGoals")
-                {
-                    g.SetComplete("X");        
-                }
-                else if (g.ToString() == "ChecklistGoals")
-                {
-                    g.SetChecklistTimes(1);
-                    
-                    if (g.GetChecklistTimes() == g.GetTimes())
-                    {
-                        g.SetComplete("X"); 
-                    }                                   
-                }                
-            }
-        }
-*/
         static int GoalBonus(List<Goals> list)
         {  
             int _counter = 0;
@@ -294,7 +274,65 @@ class Program
                 //Load Goals
                 case "4":
                     //Ask the user for the file to load
-                    
+                    Console.Write("What is the file name? ");
+                    string loadFileName = Console.ReadLine();
+                    string[] lines = System.IO.File.ReadAllLines(loadFileName);
+                    using (StreamWriter outputFile = new StreamWriter(loadFileName))
+                    {
+                        foreach (string line in lines)
+                        {
+                            List<string> list = new ();
+                            list = line.Split(":").ToList();            
+
+                            if (list[0] == "SimpleGoals")
+                            {
+                                string importList = list[1];
+                                List<string> importedList = new ();
+                                importedList = importList.Split(",").ToList();
+
+                                SimpleGoals simple = new SimpleGoals();
+                                simple.SetName(importedList[0]);
+                                simple.SetDescription(importedList[1]);
+                                simple.SetPoints(int.Parse(importedList[2]));
+                                simple.SetComplete(importedList[3]);
+                                goals.Add(simple);
+                            }
+                            else if (list[0] == "EternalGoals")
+                            {
+                                string importList = list[1];
+                                List<string> importedList = new ();
+                                importedList = importList.Split(",").ToList();
+
+                                EternalGoals eternal = new EternalGoals();
+                                eternal.SetName(importedList[0]);
+                                eternal.SetDescription(importedList[1]);
+                                eternal.SetPoints(int.Parse(importedList[2]));
+                                eternal.SetComplete(" ");
+                                goals.Add(eternal);
+                            }
+                            else if (list[0] == "ChecklistGoals")
+                            {
+                                string importList = list[1];
+                                List<string> importedList = new ();
+                                importedList = importList.Split(",").ToList();
+
+                                ChecklistGoals checklist = new ChecklistGoals();
+                                checklist.SetName(importedList[0]);
+                                checklist.SetDescription(importedList[1]);
+                                checklist.SetPoints(int.Parse(importedList[2]));
+                                checklist.SetBonusPoints(int.Parse(importedList[3]));
+                                checklist.SetHowMany(int.Parse(importedList[4]));
+                                checklist.SetChecklistTimes(int.Parse(importedList[5]));
+                                checklist.SetComplete(" ");
+                                goals.Add(checklist);                                
+                            }
+                            else
+                            {
+                                totalPoints = int.Parse(list[0]);
+                            }
+                            outputFile.WriteLine(line);
+                        }                        
+                    }
                     
                     break;
 
